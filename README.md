@@ -81,3 +81,4 @@ streamlit run app.py
 As soon as the application is up and running in your browser of choice you can begin uploading PDF documents and generating summaries. 
 
 ## ***The contents of this repository represent my viewpoints and not of my past or current employers, including Amazon Web Services (AWS). All third-party libraries, modules, plugins, and SDKs are the property of their respective owners.***# mark-hackathon
+# mark-hackathon
