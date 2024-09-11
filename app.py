@@ -20,7 +20,7 @@ with st.container():
     # Chunk_and_Summarize Function
     if File is not None:
         # determine the path to temporarily save the PDF file that was uploaded
-        save_folder = os.getenv("save_folder")
+        save_folder = os.getcwd() #os.getenv("save_folder")
         # create a posix path of save_folder and the file name
         save_path = Path(save_folder, File.name)
         # write the uploaded PDF to the save_folder you specified

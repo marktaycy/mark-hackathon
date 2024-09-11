@@ -12,7 +12,7 @@ load_dotenv()
 # configure Bedrock client
 boto3.setup_default_session(profile_name=os.getenv("profile_name"))
 config = botocore.config.Config(connect_timeout=120, read_timeout=120)
-bedrock = boto3.client('bedrock-runtime', 'us-east-1', endpoint_url='https://bedrock-runtime.us-east-1.amazonaws.com',
+bedrock = boto3.client('bedrock-runtime', 'us-west-2', endpoint_url='https://bedrock-runtime.us-west-2.amazonaws.com',
                        config=config)
 
 
@@ -99,7 +99,7 @@ def Chunk_and_Summarize(uploaded_file) -> str:
     # after we have generated the summaries of each chunk of text, and appended them to the single summary string,
     # we pass it into the final summary prompt
     final_summary_prompt = f"""\n\nHuman: You will be given a set of summaries from a document. Create a cohesive 
-    summary from the provided individual summaries. The summary should very detailed and at least 10 pages. 
+    summary from the provided individual summaries. The summary should very detailed and at least 1 pageç. 
     Summaries: {summary}
             \n\nAssistant:"""
     # print the total number of tokens being passed into the final summarization prompt
