@@ -8,12 +8,12 @@ from dotenv import load_dotenv
 # load environment variables
 load_dotenv()
 # title of the streamlit app
-st.title(f""":rainbow[Long Document Summarization with Amazon Bedrock]""")
+st.title(f""":rainbow[Squad 3 Hackathon with Amazon Bedrock]""")
 
 # default container that houses the document upload field
 with st.container():
     # header that is shown on the web UI
-    st.header('Single File Upload')
+    st.header('Extract PDF to Calendar')
     # the file upload field, the specific ui element that allows you to upload the file
     File = st.file_uploader('Upload a file', type=["pdf"], key="new")
     # when a file is uploaded it saves the file to the directory, creates a path, and invokes the
@@ -33,7 +33,17 @@ with st.container():
             # creates a timer to time the length of the summarization task and starts the timer
             start = time.time()
             # running the summarization task, and outputting the results to the front end
-            st.write(Chunk_and_Summarize(save_path))
+            result = Chunk_and_Summarize(save_path)
+            #st.write(result)
+            save_path = Path(save_folder, "Calendar.ics")
+
+            with open(save_path, 'w') as f:
+                f.write(result)
+                
+            st.write('Extraction complete! Please download the file below')
+
+            st.download_button ("Download file",result, file_name = "Calendar.ics")
+
             # ending the timer
             end = time.time()
             # using the timer, we calculate the minutes and seconds it took to perform the summarization task

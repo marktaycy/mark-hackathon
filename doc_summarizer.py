@@ -73,8 +73,8 @@ def Chunk_and_Summarize(uploaded_file) -> str:
     # creating the text splitter, we are specifically using the the recursive text splitter from langchain:
     # https://python.langchain.com/docs/modules/data_connection/document_transformers/text_splitters/recursive_text_splitter
     text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=1000,
-        chunk_overlap=100,
+        chunk_size=3000,
+        chunk_overlap=200,
         length_function=len,
         add_start_index=True
     )
@@ -87,9 +87,19 @@ def Chunk_and_Summarize(uploaded_file) -> str:
         # gathering the text content of that specific chunk
         chunk_content = chunk.page_content
         # creating the prompt that will be passed into Bedrock with the text content of the chunk
-        prompt = f"""\n\nHuman: Provide a detailed summary for the chunk of text provided to you:
+        #prompt = f"""\n\nHuman: Provide a detailed summary for the chunk of text provided to you:
+        #Text: {chunk_content}
+        #\n\nAssistant:"""
+
+        prompt = f"""\n\nHuman: Process the following:
+        1. Extract all dates, events, and timings.
+        2. Convert the extracted information into iCalendar format.
+        3. Set a reminder for each event 48 hours in advance.
+        4. Output the result in iCalendar format.
+        5. Do not include any pre-amble.:
         Text: {chunk_content}
         \n\nAssistant:"""
+
         # passing the prompt into the summarizer function to generate the summary of that chunk, and appending it to
         # the summary string
         summary += summarizer(prompt)
@@ -99,10 +109,10 @@ def Chunk_and_Summarize(uploaded_file) -> str:
     # after we have generated the summaries of each chunk of text, and appended them to the single summary string,
     # we pass it into the final summary prompt
     final_summary_prompt = f"""\n\nHuman: You will be given a set of summaries from a document. Create a cohesive 
-    summary from the provided individual summaries. The summary should very detailed and at least 1 pageç. 
+    summary from the provided individual summaries. The summary should very detailed and at least 10 pages. 
     Summaries: {summary}
             \n\nAssistant:"""
     # print the total number of tokens being passed into the final summarization prompt
     print(f"Number of tokens for this Chunk with the final prompt: {num_tokens_from_string(final_summary_prompt)}")
     # generating the final summary of all the summaries we have previously generated.
-    return summarizer(final_summary_prompt)
+    return summary #summarizer(final_summary_prompt)
