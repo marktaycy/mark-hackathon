@@ -40,20 +40,31 @@ with st.container():
             with open(save_path, 'w') as f:
                 f.write(result)
                 
-            st.write('Extraction complete! Please download the file below')
-
-            st.download_button ("Download file",result, file_name = "Calendar.ics")
-
+            st.write ('Extraction complete! Please download the calendar below.')
+            st.download_button ("Download Calendar",result, file_name = "Calendar.ics")
+            
             # ending the timer
             end = time.time()
             # using the timer, we calculate the minutes and seconds it took to perform the summarization task
             seconds = int(((end - start) % 60))
             minutes = int((end - start) // 60)
             # string to highlight the amount of time taken to complete the summarization task
-            total_time = f"""Time taken to generate a summary:
+            total_time = f"""Time taken:
+            
             Minutes: {minutes} Seconds: {round(seconds, 2)}"""
+            
+            st.write (total_time)
+
+            # ending the timer
+            #end = time.time()
+            # using the timer, we calculate the minutes and seconds it took to perform the summarization task
+            #seconds = int(((end - start) % 60))
+            #minutes = int((end - start) // 60)
+            # string to highlight the amount of time taken to complete the summarization task
+            #total_time = f"""Time taken to generate a summary:
+            #Minutes: {minutes} Seconds: {round(seconds, 2)}"""
             # sidebar is created to display the total time taken to complete the summarization task
-            with st.sidebar:
-                st.header(total_time)
+            #with st.sidebar:
+                #st.header(total_time)
             # removing the PDF that was temporarily saved to perform the summarization task
             os.remove(save_path)

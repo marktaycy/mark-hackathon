@@ -93,9 +93,9 @@ def Chunk_and_Summarize(uploaded_file) -> str:
 
         prompt = f"""\n\nHuman: Process the following:
         1. Extract all dates, events, and timings.
-        2. Convert the extracted information into iCalendar format.
+        2. Convert the extracted information into a single iCalendar format.
         3. Set a reminder for each event 48 hours in advance.
-        4. Output the result in iCalendar format.
+        4. Output the result in a single iCalendar file.
         5. Do not include any pre-amble.:
         Text: {chunk_content}
         \n\nAssistant:"""
@@ -112,7 +112,9 @@ def Chunk_and_Summarize(uploaded_file) -> str:
     summary from the provided individual summaries. The summary should very detailed and at least 10 pages. 
     Summaries: {summary}
             \n\nAssistant:"""
+    
     # print the total number of tokens being passed into the final summarization prompt
     print(f"Number of tokens for this Chunk with the final prompt: {num_tokens_from_string(final_summary_prompt)}")
+    
     # generating the final summary of all the summaries we have previously generated.
     return summary #summarizer(final_summary_prompt)
